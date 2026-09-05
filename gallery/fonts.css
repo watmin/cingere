@@ -1,0 +1,21 @@
+@font-face {
+  font-family: Hack;
+  src: local("Hack"),
+       url("https://cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/fonts/hack-regular.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Symbols Nerd Font Mono";
+  src: local("Symbols Nerd Font Mono"),
+       url("https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@v3.3.0/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFontMono-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 18px;
+  font-size: 12px;
+}
+.nav a { color: #cba6f7; text-decoration: none; }
+.nav a:hover { color: #cdd6f4; }

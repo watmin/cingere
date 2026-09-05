@@ -39,10 +39,11 @@ Claude reloads the statusline script on the next refresh. A change to
 
 ## Gallery
 
-Open `gallery/index.html` in Ghostty. `gallery/claude-status.html` is the
-Claude icon menu. Fonts are `local("Hack")` / `local("Symbols Nerd Font Mono")`
-— Ghostty already has them. Drop the `.ttf` files next to the HTML only if
-you are previewing somewhere that does not.
+Rendered: [watmin.github.io/cingere](https://watmin.github.io/cingere/)
+
+GitHub's file view will not paint HTML — that is Pages. The site is the
+`gallery/` folder. Fonts load from jsDelivr (Hack + Symbols Nerd Font Mono)
+so the glyphs show in a browser, not only in Ghostty.
 
 ## Claude snippet
 

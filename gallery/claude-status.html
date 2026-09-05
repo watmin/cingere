@@ -3,9 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title>claude status — icon menu</title>
+<link rel="stylesheet" href="fonts.css">
 <style>
-@font-face { font-family: Hack; src: local("Hack"), url("Hack-Regular.ttf"); }
-@font-face { font-family: "Symbols Nerd Font Mono"; src: local("Symbols Nerd Font Mono"), url("SymbolsNerdFontMono-Regular.ttf"); }
 :root {
   --crust:#11111b; --mantle:#181825; --text:#cdd6f4; --sub:#a6adc8;
   --over:#6c7086; --s1:#45475a; --mauve:#cba6f7; --lavender:#b4befe;
@@ -40,9 +39,20 @@ h2 { color:var(--mauve); font-size:12px; letter-spacing:.08em; text-transform:up
 </style>
 </head>
 <body>
+<nav class="nav">
+<a href="index.html">bars</a>
+<a href="glyphs.html">glyphs</a>
+<a href="seps.html">seps</a>
+<a href="hosts.html">hosts</a>
+<a href="session.html">session</a>
+<a href="ai.html">ai</a>
+<a href="procs.html">procs</a>
+<a href="uptime.html">uptime</a>
+<a href="claude-status.html">claude</a>
+</nav>
 <h1>claude status — icon per cell</h1>
 <p class="lead">Same nerd mono as the tmux bar. Peach dashed = what’s live now. Mauve solid = what I’d pick instead. Model is the one you already don’t like.</p>
-<p class="note">Open this in Ghostty so the fallback font is live. Live bar is <code>~/.claude/statusline</code>.</p>
+<p class="note">Live bar is <code>~/.claude/statusline</code>. Peach dashed = what’s live now. Mauve solid = what I’d pick instead.</p>
 
 <h2>model — this is the one to replace</h2>
 <p class="note">󰫤 reads as Gemini. “Opus 5” already names the model; an icon has to mean something else or get out of the way.</p>

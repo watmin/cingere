@@ -3,15 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title>tmux bar styles</title>
+<link rel="stylesheet" href="fonts.css">
 <style>
-@font-face {
-  font-family: Hack;
-  src: local("Hack"), url("Hack-Regular.ttf");
-}
-@font-face {
-  font-family: "Symbols Nerd Font Mono";
-  src: local("Symbols Nerd Font Mono"), url("SymbolsNerdFontMono-Regular.ttf");
-}
 :root {
   --base: #1e1e2e;
   --mantle: #181825;
@@ -101,8 +94,19 @@ body .note { color: var(--over); font-size: 12px; margin-top: 28px; }
 </style>
 </head>
 <body>
+<nav class="nav">
+<a href="index.html">bars</a>
+<a href="glyphs.html">glyphs</a>
+<a href="seps.html">seps</a>
+<a href="hosts.html">hosts</a>
+<a href="session.html">session</a>
+<a href="ai.html">ai</a>
+<a href="procs.html">procs</a>
+<a href="uptime.html">uptime</a>
+<a href="claude-status.html">claude</a>
+</nav>
 <h1>tmux status — same data, different chrome</h1>
-<p class="lead">All of these are the same session: host <b>portal</b>, windows vim / bash / htop, cpu · mem · load · time. The only thing that changed is glyphs and how much background you paint. Reload Ghostty so the nerd font fallback is live, then flip <code>@bar_style</code>.</p>
+<p class="lead">All of these are the same session: host <b>portal</b>, windows vim / bash / htop, cpu · mem · load · time. The only thing that changed is glyphs and how much background you paint. Flip <code>@bar_style</code> in <code>tmux.conf</code>.</p>
 
 <div class="card">
   <div class="tag"><span class="name">ghost</span><span class="hint">2025 default. No pills, no triangles. Current window is just brighter. Metrics as numbers.</span></div>
