@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>claude status — icon menu</title>
+<style>
+@font-face { font-family: Hack; src: local("Hack"), url("Hack-Regular.ttf"); }
+@font-face { font-family: "Symbols Nerd Font Mono"; src: local("Symbols Nerd Font Mono"), url("SymbolsNerdFontMono-Regular.ttf"); }
+:root {
+  --crust:#11111b; --mantle:#181825; --text:#cdd6f4; --sub:#a6adc8;
+  --over:#6c7086; --s1:#45475a; --mauve:#cba6f7; --lavender:#b4befe;
+  --green:#a6e3a1; --yellow:#f9e2af; --red:#f38ba8; --blue:#89b4fa;
+  --flamingo:#f2cdcd; --peach:#fab387; --teal:#94e2d5; --sky:#89dceb;
+}
+* { box-sizing: border-box; }
+body { margin:0; padding:24px 32px 48px; background:#0b0b12; color:var(--text); font:13px/1.3 Hack,"Symbols Nerd Font Mono",monospace; }
+h1 { font-size:15px; margin:0 0 4px; }
+.lead { color:var(--sub); margin:0 0 8px; max-width:1100px; }
+.note { color:var(--over); margin:0 0 18px; }
+h2 { color:var(--mauve); font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin:22px 0 8px; }
+.row { display:flex; align-items:center; gap:16px; margin:0 0 5px; }
+.tag { width:280px; color:var(--over); font-size:11px; flex:none; }
+.bar { flex:1; display:flex; align-items:center; height:26px; background:var(--mantle); border-radius:5px; padding:0 10px; }
+.ico { margin-right:6px; font-size:15px; font-family:"Symbols Nerd Font Mono",Hack,monospace; }
+.hot .tag { color:var(--mauve); }
+.hot .bar { outline:1px solid var(--mauve); }
+.now .tag { color:var(--peach); }
+.now .bar { outline:1px dashed var(--peach); }
+.sep { color:var(--s1); padding:0 8px; }
+.dim { color:var(--over); }
+.m { color:var(--lavender); }
+.g { color:var(--green); }
+.r { color:var(--red); }
+.b { color:var(--blue); }
+.p { color:var(--peach); }
+.t { color:var(--teal); }
+.s { color:var(--sky); }
+.f { color:var(--flamingo); }
+.y { color:var(--yellow); }
+</style>
+</head>
+<body>
+<h1>claude status — icon per cell</h1>
+<p class="lead">Same nerd mono as the tmux bar. Peach dashed = what’s live now. Mauve solid = what I’d pick instead. Model is the one you already don’t like.</p>
+<p class="note">Open this in Ghostty so the fallback font is live. Live bar is <code>~/.claude/statusline</code>.</p>
+
+<h2>model — this is the one to replace</h2>
+<p class="note">󰫤 reads as Gemini. “Opus 5” already names the model; an icon has to mean something else or get out of the way.</p>
+<div class="row now"><div class="tag">󰧑  md-brain  LIVE (swapped off 󰫤)</div><div class="bar"><span class="ico m">󰧑</span><span class="m">Opus 5</span></div></div>
+<div class="row hot"><div class="tag">(none)  just the name</div><div class="bar"><span class="m">Opus 5</span></div></div>
+<div class="row hot"><div class="tag">󰭹  chat</div><div class="bar"><span class="ico m">󰭹</span><span class="m">Opus 5</span></div></div>
+<div class="row"><div class="tag">󰚩  robot  (agent, not model)</div><div class="bar"><span class="ico m">󰚩</span><span class="m">Opus 5</span></div></div>
+<div class="row"><div class="tag">  sparkle</div><div class="bar"><span class="ico m"></span><span class="m">Opus 5</span></div></div>
+<div class="row"><div class="tag">󰝨  atom</div><div class="bar"><span class="ico m">󰝨</span><span class="m">Opus 5</span></div></div>
+<div class="row"><div class="tag">󱐋  lightning</div><div class="bar"><span class="ico m">󱐋</span><span class="m">Opus 5</span></div></div>
+<div class="row"><div class="tag">󰫤  four-point star  Gemini-ish, was live</div><div class="bar"><span class="ico m">󰫤</span><span class="m">Opus 5</span></div></div>
+<div class="row"><div class="tag">󱌼  head-cog  (already effort)</div><div class="bar"><span class="ico m">󱌼</span><span class="m">Opus 5</span></div></div>
+
+<h2>folder</h2>
+<div class="row now hot"><div class="tag">󰷏  folder-cog  LIVE</div><div class="bar"><span class="ico" style="color:var(--mauve)">󰷏</span> holon</div></div>
+<div class="row"><div class="tag">󰉋  md-folder</div><div class="bar"><span class="ico" style="color:var(--mauve)">󰉋</span> holon</div></div>
+<div class="row"><div class="tag">  folder</div><div class="bar"><span class="ico" style="color:var(--mauve)"></span> holon</div></div>
+<div class="row"><div class="tag">  fa-folder-open</div><div class="bar"><span class="ico" style="color:var(--mauve)"></span> holon</div></div>
+<div class="row"><div class="tag">(none)</div><div class="bar">holon</div></div>
+
+<h2>git branch</h2>
+<div class="row now hot"><div class="tag">󰘬  source-branch  LIVE</div><div class="bar"><span class="ico dim">󰘬</span><span class="dim"> main</span></div></div>
+<div class="row"><div class="tag">  dev-git-branch</div><div class="bar"><span class="ico dim"></span><span class="dim"> main</span></div></div>
+<div class="row"><div class="tag">  oct-git-branch</div><div class="bar"><span class="ico dim"></span><span class="dim"> main</span></div></div>
+<div class="row"><div class="tag">󰊢  md-git</div><div class="bar"><span class="ico dim">󰊢</span><span class="dim"> main</span></div></div>
+
+<h2>context meter — the spark is the icon</h2>
+<div class="row now hot"><div class="tag">braille spark  LIVE  (no extra glyph)</div><div class="bar"><span class="y">⣿⣿⣿⣿⣿⣿⣶⣀ 823k/1M 82%</span></div></div>
+<div class="row"><div class="tag">󰓅  speedometer prefix</div><div class="bar"><span class="ico y">󰓅</span><span class="y">⣿⣿⣿⣿⣿⣿⣶⣀ 82%</span></div></div>
+<div class="row"><div class="tag">block bar</div><div class="bar"><span class="y">███████░░ 82%</span></div></div>
+
+<h2>prompt cache  (new)</h2>
+<div class="row now hot"><div class="tag">󰃨  md-cached  LIVE</div><div class="bar"><span class="ico g">󰃨</span><span class="g">91%</span><span class="sep">┃</span><span class="ico r">󰃨</span><span class="r">cold</span></div></div>
+<div class="row"><div class="tag">󰆼  database</div><div class="bar"><span class="ico g">󰆼</span><span class="g">91%</span></div></div>
+<div class="row"><div class="tag">󰪺  cached</div><div class="bar"><span class="ico g">󰪺</span><span class="g">91%</span></div></div>
+<div class="row"><div class="tag">󰚸  memory-outline</div><div class="bar"><span class="ico g">󰚸</span><span class="g">91%</span></div></div>
+<div class="row"><div class="tag">  bolt  (cache = cheap power)</div><div class="bar"><span class="ico g"></span><span class="g">91%</span></div></div>
+
+<h2>output tokens — the ramstick</h2>
+<p class="note"> is the tmux RAM glyph. Here it means last-response output tokens. That’s the mismatch.</p>
+<div class="row now hot"><div class="tag">  arrow-down  LIVE</div><div class="bar"><span class="ico b"></span><span class="b">1.1k</span></div></div>
+<div class="row"><div class="tag">󰁯  export / out</div><div class="bar"><span class="ico b">󰁯</span><span class="b">1.1k</span></div></div>
+<div class="row"><div class="tag">  fa-memory  (tmux RAM, was live)</div><div class="bar"><span class="ico b"></span><span class="b">1.1k</span></div></div>
+<div class="row"><div class="tag">󰧭  message-out</div><div class="bar"><span class="ico b">󰧭</span><span class="b">1.1k</span></div></div>
+<div class="row"><div class="tag">󰈈  eye-out  (completion)</div><div class="bar"><span class="ico b">󰈈</span><span class="b">1.1k</span></div></div>
+<div class="row"><div class="tag">(none)  1.1k out</div><div class="bar"><span class="b">1.1k out</span></div></div>
+
+<h2>lines +/-  (new)</h2>
+<div class="row now hot"><div class="tag">(none)  the +/− is the icon  LIVE</div><div class="bar"><span class="g">+156</span> <span class="r">-23</span></div></div>
+<div class="row"><div class="tag">󰊢  git blob</div><div class="bar"><span class="ico dim">󰊢</span> <span class="g">+156</span> <span class="r">-23</span></div></div>
+<div class="row"><div class="tag">  diff</div><div class="bar"><span class="ico dim"></span> <span class="g">+156</span> <span class="r">-23</span></div></div>
+<div class="row"><div class="tag">󰕒 / 󰕌  plus-minus boxes</div><div class="bar"><span class="ico g">󰕒</span><span class="g">156</span> <span class="ico r">󰕌</span><span class="r">23</span></div></div>
+
+<h2>cost</h2>
+<div class="row now hot"><div class="tag">$  ascii  LIVE</div><div class="bar"><span class="f">$14.47</span></div></div>
+<div class="row"><div class="tag">󰚯  cash</div><div class="bar"><span class="ico f">󰚯</span><span class="f">$14.47</span></div></div>
+<div class="row"><div class="tag">󰎠  coin</div><div class="bar"><span class="ico f">󰎠</span><span class="f">$14.47</span></div></div>
+<div class="row"><div class="tag">  usd</div><div class="bar"><span class="ico f"></span><span class="f">14.47</span></div></div>
+
+<h2>clock</h2>
+<div class="row now"><div class="tag">  fa-clock  LIVE  (same as tmux time)</div><div class="bar"><span class="ico dim"></span><span class="dim"> 5h48m</span></div></div>
+<div class="row hot"><div class="tag">  stopwatch  (elapsed, not wall time)</div><div class="bar"><span class="ico dim"></span><span class="dim"> 5h48m</span></div></div>
+<div class="row"><div class="tag">󰥔  md-clock</div><div class="bar"><span class="ico dim">󰥔</span><span class="dim"> 5h48m</span></div></div>
+<div class="row"><div class="tag">󰅐  clock-outline</div><div class="bar"><span class="ico dim">󰅐</span><span class="dim"> 5h48m</span></div></div>
+
+<h2>effort</h2>
+<div class="row now hot"><div class="tag">󱌼  head-cog  LIVE</div><div class="bar"><span class="ico t">󱌼</span><span class="t"> high</span></div></div>
+<div class="row"><div class="tag">󰛨  lightbulb-on</div><div class="bar"><span class="ico t">󰛨</span><span class="t"> high</span></div></div>
+<div class="row"><div class="tag">󱍄  head-lightbulb</div><div class="bar"><span class="ico t">󱍄</span><span class="t"> high</span></div></div>
+<div class="row"><div class="tag">󰟶  thought-bubble</div><div class="bar"><span class="ico t">󰟶</span><span class="t"> high</span></div></div>
+<div class="row"><div class="tag">(none)  just the word</div><div class="bar"><span class="t">high</span></div></div>
+
+<h2>5-hour cap</h2>
+<div class="row now hot"><div class="tag">󰓅  speedometer  LIVE</div><div class="bar"><span class="ico p">󰓅</span><span class="p"> 5h 41%</span></div></div>
+<div class="row"><div class="tag">󰊚  gauge</div><div class="bar"><span class="ico p">󰊚</span><span class="p"> 5h 41%</span></div></div>
+<div class="row"><div class="tag">  tachometer</div><div class="bar"><span class="ico p"></span><span class="p"> 5h 41%</span></div></div>
+<div class="row"><div class="tag">(none)  the “5h” is the icon</div><div class="bar"><span class="p">5h 41%</span></div></div>
+
+<h2>7-day cap</h2>
+<div class="row now hot"><div class="tag">󰃭  calendar  LIVE</div><div class="bar"><span class="ico s">󰃭</span><span class="s"> 7d 62%</span></div></div>
+<div class="row"><div class="tag">  fa-calendar</div><div class="bar"><span class="ico s"></span><span class="s"> 7d 62%</span></div></div>
+<div class="row"><div class="tag">󰃰  calendar-clock</div><div class="bar"><span class="ico s">󰃰</span><span class="s"> 7d 62%</span></div></div>
+<div class="row"><div class="tag">(none)  the “7d” is the icon</div><div class="bar"><span class="s">7d 62%</span></div></div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>proc / thread icons</title>
+<style>
+@font-face { font-family: Hack; src: local("Hack"), url("Hack-Regular.ttf"); }
+@font-face { font-family: "Symbols Nerd Font Mono"; src: local("Symbols Nerd Font Mono"), url("SymbolsNerdFontMono-Regular.ttf"); }
+:root { --crust:#11111b; --mantle:#181825; --text:#cdd6f4; --sub:#a6adc8; --over:#6c7086; --flamingo:#f2cdcd; --mauve:#cba6f7; --teal:#94e2d5; }
+* { box-sizing:border-box; }
+body { margin:0; padding:24px 32px 40px; background:#0b0b12; color:var(--text); font:13px/1.3 Hack,"Symbols Nerd Font Mono",monospace; }
+h1 { font-size:15px; margin:0 0 4px; }
+.lead { color:var(--sub); margin:0 0 16px; max-width:1100px; }
+h2 { color:var(--mauve); font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin:20px 0 8px; }
+.row { display:flex; align-items:center; gap:16px; margin:0 0 5px; }
+.tag { width:280px; color:var(--over); font-size:11px; flex:none; }
+.bar { flex:1; display:flex; align-items:center; height:26px; background:var(--mantle); border-radius:5px; padding:0 10px; gap:4px; }
+.ico { color:var(--flamingo); font-size:15px; font-family:"Symbols Nerd Font Mono",Hack,monospace; }
+.ico2 { color:var(--teal); font-size:15px; font-family:"Symbols Nerd Font Mono",Hack,monospace; margin-left:10px; }
+.hot .tag { color:var(--mauve); }
+.hot .bar { outline:1px solid var(--mauve); }
+</style>
+</head>
+<body>
+<h1>procs vs threads</h1>
+<p class="lead">Right now one chip: <b> 4/1171</b> = running / threads (htop’s first line). You can keep that, or split into two chips. reason is the interesting box: 228 procs, 1171 threads, 4 runnable.</p>
+
+<h2>combined — one chip (what you have)</h2>
+<div class="row hot"><div class="tag">  fa-tasks  NOW</div><div class="bar"><span class="ico"></span> 4/1171</div></div>
+<div class="row"><div class="tag">  server-process</div><div class="bar"><span class="ico"></span> 4/1171</div></div>
+<div class="row"><div class="tag">󰣖  cogs</div><div class="bar"><span class="ico">󰣖</span> 4/1171</div></div>
+<div class="row"><div class="tag">  fa-cogs</div><div class="bar"><span class="ico"></span> 4/1171</div></div>
+<div class="row"><div class="tag">󰀻  apps</div><div class="bar"><span class="ico">󰀻</span> 4/1171</div></div>
+<div class="row"><div class="tag">󰵆  apps-box</div><div class="bar"><span class="ico">󰵆</span> 4/1171</div></div>
+<div class="row"><div class="tag">  oct-apps</div><div class="bar"><span class="ico"></span> 4/1171</div></div>
+<div class="row"><div class="tag">  sitemap</div><div class="bar"><span class="ico"></span> 4/1171</div></div>
+<div class="row"><div class="tag">󰒪  sitemap</div><div class="bar"><span class="ico">󰒪</span> 4/1171</div></div>
+<div class="row"><div class="tag">  workflow</div><div class="bar"><span class="ico"></span> 4/1171</div></div>
+<div class="row"><div class="tag">  tasklist</div><div class="bar"><span class="ico"></span> 4/1171</div></div>
+<div class="row"><div class="tag">  oct-tasklist</div><div class="bar"><span class="ico"></span> 4/1171</div></div>
+
+<h2>process — a single OS process</h2>
+<div class="row hot"><div class="tag">  server-process</div><div class="bar"><span class="ico"></span> 228</div></div>
+<div class="row"><div class="tag">󰓁  source-fork</div><div class="bar"><span class="ico">󰓁</span> 228</div></div>
+<div class="row"><div class="tag">  code-fork</div><div class="bar"><span class="ico"></span> 228</div></div>
+<div class="row"><div class="tag">  repo-forked</div><div class="bar"><span class="ico"></span> 228</div></div>
+<div class="row"><div class="tag">󰘬  source-branch</div><div class="bar"><span class="ico">󰘬</span> 228</div></div>
+<div class="row"><div class="tag">󰒓  cog  (one worker)</div><div class="bar"><span class="ico">󰒓</span> 228</div></div>
+<div class="row"><div class="tag">󰀻  apps</div><div class="bar"><span class="ico">󰀻</span> 228</div></div>
+<div class="row"><div class="tag">󰵆  apps-box</div><div class="bar"><span class="ico">󰵆</span> 228</div></div>
+
+<h2>thread — many of them inside a proc</h2>
+<div class="row hot"><div class="tag">󱇫  spider-thread  yes really</div><div class="bar"><span class="ico2">󱇫</span> 1171</div></div>
+<div class="row"><div class="tag">󰌨  layers</div><div class="bar"><span class="ico2">󰌨</span> 1171</div></div>
+<div class="row"><div class="tag">  cod-layers</div><div class="bar"><span class="ico2"></span> 1171</div></div>
+<div class="row"><div class="tag">  layer-group</div><div class="bar"><span class="ico2"></span> 1171</div></div>
+<div class="row"><div class="tag">  oct-stack</div><div class="bar"><span class="ico2"></span> 1171</div></div>
+<div class="row"><div class="tag">  boxes-stacked</div><div class="bar"><span class="ico2"></span> 1171</div></div>
+<div class="row"><div class="tag">󰛡  hexagon-multiple</div><div class="bar"><span class="ico2">󰛡</span> 1171</div></div>
+<div class="row"><div class="tag">󰬸  circle-multiple</div><div class="bar"><span class="ico2">󰬸</span> 1171</div></div>
+<div class="row"><div class="tag">󰇘  dots-horizontal</div><div class="bar"><span class="ico2">󰇘</span> 1171</div></div>
+<div class="row"><div class="tag">  debug-console</div><div class="bar"><span class="ico2"></span> 1171</div></div>
+<div class="row"><div class="tag">  stackframe</div><div class="bar"><span class="ico2"></span> 1171</div></div>
+<div class="row"><div class="tag">󰜨  view-parallel</div><div class="bar"><span class="ico2">󰜨</span> 1171</div></div>
+<div class="row"><div class="tag">󰣖  cogs  (many workers)</div><div class="bar"><span class="ico2">󰣖</span> 1171</div></div>
+
+<h2>split — two chips, as it would look on the bar</h2>
+<div class="row hot"><div class="tag">fork + layers</div><div class="bar"><span class="ico">󰓁</span> 228 <span class="ico2">󰌨</span> 1171</div></div>
+<div class="row"><div class="tag">process + spider-thread</div><div class="bar"><span class="ico"></span> 228 <span class="ico2">󱇫</span> 1171</div></div>
+<div class="row"><div class="tag">apps + stack</div><div class="bar"><span class="ico">󰀻</span> 228 <span class="ico2"></span> 1171</div></div>
+<div class="row"><div class="tag">cog + cogs</div><div class="bar"><span class="ico">󰒓</span> 228 <span class="ico2">󰣖</span> 1171</div></div>
+<div class="row"><div class="tag">tasklist + layers</div><div class="bar"><span class="ico"></span> 228 <span class="ico2">󰌨</span> 1171</div></div>
+<div class="row"><div class="tag">one chip, two icons</div><div class="bar"><span class="ico">󰓁</span>4/<span class="ico2">󰌨</span>1171</div></div>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>tmux bar styles</title>
+<style>
+@font-face {
+  font-family: Hack;
+  src: local("Hack"), url("Hack-Regular.ttf");
+}
+@font-face {
+  font-family: "Symbols Nerd Font Mono";
+  src: local("Symbols Nerd Font Mono"), url("SymbolsNerdFontMono-Regular.ttf");
+}
+:root {
+  --base: #1e1e2e;
+  --mantle: #181825;
+  --crust: #11111b;
+  --text: #cdd6f4;
+  --sub: #a6adc8;
+  --over: #6c7086;
+  --s0: #313244;
+  --s1: #45475a;
+  --mauve: #cba6f7;
+  --blue: #89b4fa;
+  --green: #a6e3a1;
+  --yellow: #f9e2af;
+  --peach: #fab387;
+  --teal: #94e2d5;
+  --sky: #89dceb;
+  --red: #f38ba8;
+  --lavender: #b4befe;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 32px 40px 48px;
+  background: #0b0b12;
+  color: var(--text);
+  font: 13px/1.35 Hack, "Symbols Nerd Font Mono", ui-monospace, monospace;
+}
+h1 { font-size: 15px; font-weight: 700; margin: 0 0 6px; letter-spacing: 0.04em; }
+.lead { color: var(--sub); margin: 0 0 28px; max-width: 980px; }
+.card { margin: 0 0 22px; }
+.tag {
+  display: flex; align-items: baseline; gap: 12px; margin: 0 0 8px;
+}
+.name { color: var(--mauve); font-weight: 700; }
+.hint { color: var(--over); font-size: 12px; }
+.term {
+  background: var(--crust);
+  border: 1px solid #1a1a28;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.bar {
+  display: flex;
+  align-items: stretch;
+  height: 28px;
+  background: var(--mantle);
+  white-space: nowrap;
+  font-size: 13px;
+}
+.bar > .left, .bar > .mid, .bar > .right { display: flex; align-items: center; }
+.bar > .mid { flex: 1; min-width: 8px; }
+.bar > .right { margin-left: auto; }
+.ghost { color: var(--over); padding: 0 8px; }
+.win { padding: 0 8px; color: var(--sub); }
+.win.cur { color: var(--text); font-weight: 700; }
+.pipe { color: var(--s1); }
+.chip {
+  display: flex; align-items: stretch; height: 100%;
+}
+.num {
+  padding: 0 8px; color: var(--crust); background: var(--s1);
+}
+.lbl { padding: 0 8px; background: var(--s0); color: var(--text); }
+.chip.cur .num { background: var(--mauve); }
+.chip.cur .lbl { background: var(--s1); }
+.round-l { color: var(--s0); }
+.round-r { color: var(--s0); }
+.chip.cur .round-l, .chip.cur .round-r { color: var(--mauve); }
+.pill {
+  display: inline-flex; align-items: center; height: 22px; margin: 0 3px;
+}
+.pill .cap { color: var(--p); line-height: 1; }
+.pill .ico { background: var(--p); color: var(--crust); padding: 0 6px; height: 22px; display: flex; align-items: center; }
+.pill .val { background: var(--s0); color: var(--text); padding: 0 8px; height: 22px; display: flex; align-items: center; }
+.host { color: var(--mauve); padding: 0 10px; font-weight: 700; }
+.sess { color: var(--green); padding-right: 8px; }
+.metric { padding: 0 8px; color: var(--sub); }
+.metric b { color: var(--text); font-weight: 700; }
+.ico { color: var(--over); }
+.slash { color: var(--s1); padding: 0 2px; }
+.pl { display: flex; height: 100%; align-items: stretch; }
+.pl .n { padding: 0 7px; display: flex; align-items: center; }
+.pl .t { padding: 0 8px 0 6px; display: flex; align-items: center; }
+.pl .tri { display: flex; align-items: center; }
+.dim { color: var(--over); }
+body .note { color: var(--over); font-size: 12px; margin-top: 28px; }
+</style>
+</head>
+<body>
+<h1>tmux status — same data, different chrome</h1>
+<p class="lead">All of these are the same session: host <b>portal</b>, windows vim / bash / htop, cpu · mem · load · time. The only thing that changed is glyphs and how much background you paint. Reload Ghostty so the nerd font fallback is live, then flip <code>@bar_style</code>.</p>
+
+<div class="card">
+  <div class="tag"><span class="name">ghost</span><span class="hint">2025 default. No pills, no triangles. Current window is just brighter. Metrics as numbers.</span></div>
+  <div class="term"><div class="bar">
+    <div class="left"><span class="host">portal</span></div>
+    <div class="left">
+      <span class="win">1 vim</span>
+      <span class="win">2 bash</span>
+      <span class="win cur">3 htop</span>
+    </div>
+    <div class="mid"></div>
+    <div class="right">
+      <span class="metric"><span class="ico"></span> <b>4.4%</b></span>
+      <span class="metric"><span class="ico"></span> <b>32%</b></span>
+      <span class="metric"><span class="ico">󰊚</span> <b>1.66</b> <span class="dim">1.36 1.21</span></span>
+      <span class="metric dim">21:29</span>
+    </div>
+  </div></div>
+</div>
+
+<div class="card">
+  <div class="tag"><span class="name">pipes</span><span class="hint">l33t / hacker-news. Unicode box pipes, current window inverted. Zero private-use triangles.</span></div>
+  <div class="term"><div class="bar">
+    <div class="left"><span class="host">portal</span><span class="pipe">│</span></div>
+    <div class="left">
+      <span class="win">1 vim</span><span class="pipe">│</span>
+      <span class="win">2 bash</span><span class="pipe">│</span>
+      <span class="win cur" style="background:var(--mauve);color:var(--crust);padding:0 8px;height:100%;display:flex;align-items:center;">3 htop</span>
+    </div>
+    <div class="mid"></div>
+    <div class="right">
+      <span class="pipe">│</span><span class="metric">cpu <b>4.4%</b></span>
+      <span class="pipe">│</span><span class="metric">mem <b>32%</b></span>
+      <span class="pipe">│</span><span class="metric">load <b>1.66</b> <span class="dim">1.36 1.21</span></span>
+      <span class="pipe">│</span><span class="metric dim">21:29</span>
+    </div>
+  </div></div>
+</div>
+
+<div class="card">
+  <div class="tag"><span class="name">chips</span><span class="hint">Catppuccin <code>basic</code>. Number is a solid block, name sits next to it. Dense, readable, no special glyphs.</span></div>
+  <div class="term"><div class="bar">
+    <div class="left"><span class="host">portal</span></div>
+    <div class="left">
+      <span class="chip"><span class="num">1</span><span class="lbl">vim</span></span>
+      <span class="chip"><span class="num">2</span><span class="lbl">bash</span></span>
+      <span class="chip cur"><span class="num">3</span><span class="lbl">htop</span></span>
+    </div>
+    <div class="mid"></div>
+    <div class="right">
+      <span class="chip"><span class="num" style="background:var(--yellow)">cpu</span><span class="lbl">4.4%</span></span>
+      <span class="chip"><span class="num" style="background:var(--blue)">mem</span><span class="lbl">32%</span></span>
+      <span class="chip"><span class="num" style="background:var(--teal)">load</span><span class="lbl">1.66 1.36 1.21</span></span>
+    </div>
+  </div></div>
+</div>
+
+<div class="card">
+  <div class="tag"><span class="name">pills</span><span class="hint">Catppuccin <code>rounded</code> — what you have now. Capsules. Soft. Very 2023 ricing.</span></div>
+  <div class="term"><div class="bar">
+    <div class="left" style="padding-left:6px;">
+      <span class="pill" style="--p:var(--mauve)"><span class="cap"></span><span class="val">portal</span><span class="cap" style="color:var(--s0)"></span></span>
+    </div>
+    <div class="left">
+      <span class="chip"><span class="round-l"></span><span class="num">1</span><span class="lbl">vim</span><span class="round-r"></span></span>
+      <span class="chip"><span class="round-l"></span><span class="num">2</span><span class="lbl">bash</span><span class="round-r"></span></span>
+      <span class="chip cur"><span class="round-l"></span><span class="num">3</span><span class="lbl">htop</span><span class="round-r"></span></span>
+    </div>
+    <div class="mid"></div>
+    <div class="right">
+      <span class="pill" style="--p:var(--yellow)"><span class="cap"></span><span class="ico">cpu</span><span class="val">4.4%</span><span class="cap" style="color:var(--s0)"></span></span>
+      <span class="pill" style="--p:var(--blue)"><span class="cap"></span><span class="ico">mem</span><span class="val">32%</span><span class="cap" style="color:var(--s0)"></span></span>
+      <span class="pill" style="--p:var(--teal)"><span class="cap"></span><span class="ico">load</span><span class="val">1.66</span><span class="cap" style="color:var(--s0)"></span></span>
+    </div>
+  </div></div>
+</div>
+
+<div class="card">
+  <div class="tag"><span class="name">slant</span><span class="hint">Catppuccin <code>slanted</code>. Same idea as old Powerline, newer extra-glyphs ( ) instead of . Harder, more “dashboard”.</span></div>
+  <div class="term"><div class="bar">
+    <div class="left pl">
+      <span class="n" style="background:var(--mauve);color:var(--crust)">3</span>
+      <span class="t" style="background:var(--s1)">htop</span>
+      <span class="tri" style="color:var(--s1);background:transparent"></span>
+      <span class="n" style="background:var(--s1);color:var(--crust)">1</span>
+      <span class="t" style="background:var(--s0)">vim</span>
+      <span class="tri" style="color:var(--s0)"></span>
+    </div>
+    <div class="mid"></div>
+    <div class="right pl">
+      <span class="tri" style="color:var(--yellow)"></span>
+      <span class="n" style="background:var(--yellow);color:var(--crust)">cpu</span>
+      <span class="t" style="background:var(--s0)">4.4%</span>
+      <span class="tri" style="color:var(--blue);background:var(--s0)"></span>
+      <span class="n" style="background:var(--blue);color:var(--crust)">mem</span>
+      <span class="t" style="background:var(--s0)">32%</span>
+      <span class="tri" style="color:var(--teal);background:var(--s0)"></span>
+      <span class="n" style="background:var(--teal);color:var(--crust)">load</span>
+      <span class="t" style="background:var(--s0)">1.66</span>
+    </div>
+  </div></div>
+</div>
+
+<div class="card">
+  <div class="tag"><span class="name">classic</span><span class="hint">Your old Powerline triangles (  ) in mocha. Familiar, busy, eats a lot of bar. Still available.</span></div>
+  <div class="term"><div class="bar">
+    <div class="left pl">
+      <span class="n" style="background:var(--green);color:var(--crust)">portal</span>
+      <span class="tri" style="color:var(--green);background:var(--mauve)"></span>
+      <span class="n" style="background:var(--mauve);color:var(--crust)">3*</span>
+      <span class="t" style="background:var(--mauve);color:var(--crust)">htop</span>
+      <span class="tri" style="color:var(--mauve);background:var(--s0)"></span>
+      <span class="t" style="background:var(--s0);color:var(--sub)">1 vim  2 bash</span>
+      <span class="tri" style="color:var(--s0);background:var(--mantle)"></span>
+    </div>
+    <div class="mid"></div>
+    <div class="right pl">
+      <span class="tri" style="color:var(--s0)"></span>
+      <span class="t" style="background:var(--s0)">4.4%  32%  1.66</span>
+      <span class="tri" style="color:var(--blue);background:var(--s0)"></span>
+      <span class="t" style="background:var(--blue);color:var(--crust)">21:29</span>
+      <span class="tri" style="color:var(--yellow);background:var(--blue)"></span>
+      <span class="t" style="background:var(--yellow);color:var(--crust)"> portal</span>
+    </div>
+  </div></div>
+</div>
+
+<p class="note">What actually got invented since Powerline: (1) truecolor so mocha isn’t a 256-color approximation, (2) Nerd Font extra glyphs — rounded  and slanted , plus thousands of icons, (3) OSC 8 hyperlinks / OSC 52 clipboard, (4) undercurl. The bar itself is still just a format string. “Modern” is mostly restraint: paint less background, let color + weight do the work the triangles used to.</p>
+</body>
+</html>

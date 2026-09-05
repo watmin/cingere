@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>host icons</title>
+<style>
+@font-face { font-family: "Symbols Nerd Font Mono"; src: local("Symbols Nerd Font Mono"), url("SymbolsNerdFontMono-Regular.ttf"); }
+@font-face { font-family: Hack; src: local("Hack"), url("Hack-Regular.ttf"); }
+body { margin:0; padding:24px 32px; background:#0b0b12; color:#cdd6f4; font:13px Hack, "Symbols Nerd Font Mono", monospace; }
+h1 { font-size:15px; margin:0 0 6px; }
+p { color:#a6adc8; margin:0 0 16px; }
+.grid { display:grid; grid-template-columns:repeat(8,1fr); gap:8px; }
+.cell { background:#181825; border:1px solid #1f1f30; border-radius:6px; padding:12px 6px 8px; text-align:center; }
+.cell.pick { border-color:#cba6f7; }
+.g { font-family:"Symbols Nerd Font Mono",monospace; font-size:36px; height:44px; display:flex; align-items:center; justify-content:center; }
+.nm { color:#a6adc8; font-size:11px; margin-top:4px; }
+.cp { color:#6c7086; font-size:10px; }
+.pick .nm { color:#cba6f7; }
+code { color:#cba6f7; }
+</style>
+</head>
+<body>
+<h1>host icons</h1>
+<p>Current pick is mauve. Swap with <code>set -g @host_icon "…"</code> then <code>C-a r</code>.</p>
+<div class="grid">
+  <div class="cell pick"><div class="g">󰒋</div><div class="nm">rack (now)</div><div class="cp">󰒋</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fa-server</div><div class="cp"></div></div>
+  <div class="cell"><div class="g"></div><div class="nm">oct-server</div><div class="cp"></div></div>
+  <div class="cell"><div class="g"></div><div class="nm">cod-server</div><div class="cp"></div></div>
+  <div class="cell"><div class="g">󰒍</div><div class="nm">server+net</div><div class="cp">󰒍</div></div>
+  <div class="cell"><div class="g">󰒒</div><div class="nm">server-lock</div><div class="cp">󰒒</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">server-env</div><div class="cp"></div></div>
+  <div class="cell"><div class="g">󰇅</div><div class="nm">tower</div><div class="cp">󰇅</div></div>
+  <div class="cell"><div class="g">󰪫</div><div class="nm">tower+monitor</div><div class="cp">󰪫</div></div>
+  <div class="cell"><div class="g">󰟀</div><div class="nm">classic pc</div><div class="cp">󰟀</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">desktop</div><div class="cp"></div></div>
+  <div class="cell"><div class="g">󰍹</div><div class="nm">monitor</div><div class="cp">󰍹</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">laptop</div><div class="cp"></div></div>
+  <div class="cell"><div class="g">󰌢</div><div class="nm">md-laptop</div><div class="cp">󰌢</div></div>
+  <div class="cell"><div class="g">󰣳</div><div class="nm">nas</div><div class="cp">󰣳</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">hard drive</div><div class="cp"></div></div>
+  <div class="cell"><div class="g"></div><div class="nm">tux</div><div class="cp"></div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fa-linux</div><div class="cp"></div></div>
+  <div class="cell"><div class="g">󰌽</div><div class="nm">md-linux</div><div class="cp">󰌽</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">pop!_os</div><div class="cp"></div></div>
+  <div class="cell"><div class="g"></div><div class="nm">terminal-linux</div><div class="cp"></div></div>
+  <div class="cell"><div class="g"></div><div class="nm">old pl lock</div><div class="cp"></div></div>
+  <div class="cell"><div class="g">󰘚</div><div class="nm">chip</div><div class="cp">󰘚</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">oct-cpu</div><div class="cp"></div></div>
+</div>
+</body>
+</html>

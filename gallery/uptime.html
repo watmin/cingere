@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>uptime icons</title>
+<style>
+@font-face { font-family: Hack; src: local("Hack"), url("Hack-Regular.ttf"); }
+@font-face { font-family: "Symbols Nerd Font Mono"; src: local("Symbols Nerd Font Mono"), url("SymbolsNerdFontMono-Regular.ttf"); }
+:root { --crust:#11111b; --mantle:#181825; --text:#cdd6f4; --sub:#a6adc8; --over:#6c7086; --s1:#45475a; --mauve:#cba6f7; --lavender:#b4befe; }
+* { box-sizing:border-box; }
+body { margin:0; padding:24px 32px 40px; background:#0b0b12; color:var(--text); font:13px/1.3 Hack,"Symbols Nerd Font Mono",monospace; }
+h1 { font-size:15px; margin:0 0 4px; }
+.lead { color:var(--sub); margin:0 0 16px; max-width:1100px; }
+h2 { color:var(--mauve); font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin:20px 0 8px; }
+.row { display:flex; align-items:center; gap:16px; margin:0 0 5px; }
+.tag { width:240px; color:var(--over); font-size:11px; flex:none; }
+.bar { flex:1; display:flex; align-items:center; height:26px; background:var(--mantle); border-radius:5px; padding:0 10px; }
+.ico { color:var(--lavender); margin-right:6px; font-size:15px; font-family:"Symbols Nerd Font Mono",Hack,monospace; }
+.pick .tag { color:var(--mauve); }
+.pick .bar { outline:1px solid var(--mauve); }
+</style>
+</head>
+<body>
+<h1>what “uptime” can look like</h1>
+<p class="lead">Same number, different metaphor. ↑ is “still up.” Timers are “how long.” Hourglasses are “elapsed.” Pulse is “alive.” Power is “hasn’t been off.”</p>
+
+<h2>elapsed time — closest to the number</h2>
+<div class="row"><div class="tag">󱎫  timer</div><div class="bar"><span class="ico">󱎫</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰔛  timer outline</div><div class="bar"><span class="ico">󰔛</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰁫  av-timer</div><div class="bar"><span class="ico">󰁫</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  stopwatch</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰃰  calendar-clock</div><div class="bar"><span class="ico">󰃰</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰅐  clock outline</div><div class="bar"><span class="ico">󰅐</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰖉  watch</div><div class="bar"><span class="ico">󰖉</span>11d 21h 49m</div></div>
+
+<h2>hourglass — time passing</h2>
+<div class="row"><div class="tag">󰔟  sand</div><div class="bar"><span class="ico">󰔟</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰞌  sand full</div><div class="bar"><span class="ico">󰞌</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰚭  sand empty</div><div class="bar"><span class="ico">󰚭</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  fa-hourglass</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  hourglass start</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  oct-hourglass</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+
+<h2>history — has been running</h2>
+<div class="row"><div class="tag">󰋚  history</div><div class="bar"><span class="ico">󰋚</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  fa-history</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  cod-history</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  oct-history</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+
+<h2>alive — heartbeat / pulse</h2>
+<div class="row"><div class="tag">󰐰  pulse</div><div class="bar"><span class="ico">󰐰</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  cod-pulse</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  oct-pulse</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  heart-pulse</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰔵  trending up</div><div class="bar"><span class="ico">󰔵</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  chart-line</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+
+<h2>still on — power</h2>
+<div class="row"><div class="tag">⏻  iec-power</div><div class="bar"><span class="ico">⏻</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">⏽  power-on</div><div class="bar"><span class="ico">⏽</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰐥  md-power</div><div class="bar"><span class="ico">󰐥</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰤃  power-on</div><div class="bar"><span class="ico">󰤃</span>11d 21h 49m</div></div>
+
+<h2>continuous — loop / infinity</h2>
+<div class="row"><div class="tag">󰛤  infinity</div><div class="bar"><span class="ico">󰛤</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  oct-infinity</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  refresh</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰑐  reload</div><div class="bar"><span class="ico">󰑐</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰓦  sync</div><div class="bar"><span class="ico">󰓦</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰑖  repeat</div><div class="bar"><span class="ico">󰑖</span>11d 21h 49m</div></div>
+
+<h2>up — the old powerline metaphor</h2>
+<div class="row pick"><div class="tag">↑  unicode (now)</div><div class="bar"><span class="ico">↑</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  fa-arrow-up</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰜷  bold up</div><div class="bar"><span class="ico">󰜷</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">󰁝  md-arrow-up</div><div class="bar"><span class="ico">󰁝</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">  oct-arrow-up</div><div class="bar"><span class="ico"></span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">▲  black triangle</div><div class="bar"><span class="ico">▲</span>11d 21h 49m</div></div>
+<div class="row"><div class="tag">⇧  white up</div><div class="bar"><span class="ico">⇧</span>11d 21h 49m</div></div>
+</body>
+</html>

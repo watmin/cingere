@@ -1,0 +1,12 @@
+#!/bin/sh
+# Attach to the holon tmux session, or create it.
+# If already inside tmux, switch instead of nesting.
+set -e
+session=holon
+
+if [ -n "$TMUX" ]; then
+  tmux has-session -t "$session" 2>/dev/null || tmux new-session -d -s "$session"
+  exec tmux switch-client -t "$session"
+fi
+
+exec tmux new-session -A -s "$session"

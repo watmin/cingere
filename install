@@ -1,0 +1,53 @@
+#!/bin/sh
+# Gird this $HOME: symlink tmux.conf, ~/.config/tmux, and Claude's statusline
+# at the repo. Existing real files are copied aside once as *.bak.cingere.
+set -e
+root=$(CDPATH= cd -- "$(dirname "$0")" && pwd)
+
+link() {
+  src=$1
+  dest=$2
+  if [ -L "$dest" ]; then
+    current=$(readlink "$dest")
+    [ "$current" = "$src" ] && return 0
+  elif [ -e "$dest" ]; then
+    bak=${dest}.bak.cingere
+    if [ ! -e "$bak" ]; then
+      mv "$dest" "$bak"
+    else
+      rm -rf "$dest"
+    fi
+  fi
+  mkdir -p "$(dirname "$dest")"
+  ln -sfn "$src" "$dest"
+}
+
+link "$root/tmux.conf" "$HOME/.tmux.conf"
+link "$root/tmux" "$HOME/.config/tmux"
+link "$root/claude/statusline" "$HOME/.claude/statusline"
+chmod +x "$root/claude/statusline" "$root/tmux/"*
+
+python3 - "$root" <<'PY'
+import json, sys
+from pathlib import Path
+p = Path.home() / ".claude" / "settings.json"
+data = json.loads(p.read_text()) if p.exists() else {}
+want = {
+    "type": "command",
+    "command": "~/.claude/statusline",
+    "padding": 0,
+    "refreshInterval": 15,
+}
+if data.get("statusLine") != want:
+    if p.exists() and not (p.parent / "settings.json.bak.cingere").exists():
+        (p.parent / "settings.json.bak.cingere").write_text(p.read_text())
+    data["statusLine"] = want
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(data, indent=2) + "\n")
+PY
+
+echo "cingere: $HOME/.tmux.conf -> $root/tmux.conf"
+echo "cingere: $HOME/.config/tmux -> $root/tmux"
+echo "cingere: $HOME/.claude/statusline -> $root/claude/statusline"
+echo "reload tmux: tmux source-file ~/.tmux.conf"
+echo "claude statusline reloads on the next refresh"

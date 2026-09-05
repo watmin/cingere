@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>glyphs in reach</title>
+<style>
+@font-face { font-family: Hack; src: local("Hack"), url("Hack-Regular.ttf"); }
+@font-face { font-family: "Symbols Nerd Font Mono"; src: local("Symbols Nerd Font Mono"), url("SymbolsNerdFontMono-Regular.ttf"); }
+:root {
+  --crust:#11111b; --mantle:#181825; --text:#cdd6f4; --sub:#a6adc8;
+  --over:#6c7086; --s0:#313244; --mauve:#cba6f7; --yellow:#f9e2af;
+  --blue:#89b4fa; --teal:#94e2d5; --green:#a6e3a1; --peach:#fab387;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 28px 36px 40px;
+  background: #0b0b12; color: var(--text);
+  font: 13px/1.35 Hack, "Symbols Nerd Font Mono", ui-monospace, monospace;
+}
+h1 { font-size: 15px; margin: 0 0 4px; }
+.lead { color: var(--sub); margin: 0 0 8px; max-width: 1100px; }
+.note { color: var(--over); margin: 0 0 22px; }
+h2 { color: var(--mauve); font-size: 13px; margin: 22px 0 10px; letter-spacing: .08em; text-transform: uppercase; }
+.grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; }
+.cell {
+  background: var(--mantle);
+  border: 1px solid #1f1f30;
+  border-radius: 6px;
+  padding: 10px 6px 8px;
+  text-align: center;
+}
+.cell.pick { border-color: var(--mauve); }
+.g {
+  font-family: "Symbols Nerd Font Mono", Hack, monospace;
+  font-size: 34px; line-height: 1.15; color: var(--text);
+  height: 42px; display: flex; align-items: center; justify-content: center;
+}
+.nm { color: var(--sub); font-size: 11px; margin-top: 4px; word-break: break-all; }
+.cp { color: var(--over); font-size: 10px; }
+.pick .nm { color: var(--mauve); }
+</style>
+</head>
+<body>
+<h1>glyphs actually in reach</h1>
+<p class="lead">All of these exist in <b>Symbols Nerd Font Mono</b>, which Ghostty already falls back to. Hack draws the letters; this font draws the icons. Mauve border = the ones I’d put on the bar first. Click nothing — this is a menu.</p>
+<p class="note">10,415 glyphs in the font. Below is the status-bar cut, not the whole cheat sheet.</p>
+
+<h2>host / box</h2>
+<div class="grid">
+  <div class="cell pick"><div class="g">󰒋</div><div class="nm">md-server</div><div class="cp">U+F048B</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fa-server</div><div class="cp">U+F233</div></div>
+  <div class="cell"><div class="g">󰇅</div><div class="nm">desktop-tower</div><div class="cp">U+F01C5</div></div>
+  <div class="cell"><div class="g">󰪫</div><div class="nm">tower+monitor</div><div class="cp">U+F0AAB</div></div>
+  <div class="cell"><div class="g">󰟀</div><div class="nm">desktop-classic</div><div class="cp">U+F07C0</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fa-desktop</div><div class="cp">U+F108</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fa-laptop</div><div class="cp">U+F109</div></div>
+  <div class="cell"><div class="g">󰌢</div><div class="nm">md-laptop</div><div class="cp">U+F0322</div></div>
+  <div class="cell"><div class="g">󰍹</div><div class="nm">md-monitor</div><div class="cp">U+F0379</div></div>
+  <div class="cell"><div class="g">󰣳</div><div class="nm">md-nas</div><div class="cp">U+F08F3</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">tux</div><div class="cp">U+F31A</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fa-linux</div><div class="cp">U+F17C</div></div>
+  <div class="cell"><div class="g">󰌽</div><div class="nm">md-linux</div><div class="cp">U+F033D</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">pl-hostname</div><div class="cp">U+E0A2  old powerline lock</div></div>
+  <div class="cell"><div class="g">󰒍</div><div class="nm">server-network</div><div class="cp">U+F048D</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">cod-server</div><div class="cp">U+EB50</div></div>
+</div>
+
+<h2>cpu</h2>
+<div class="grid">
+  <div class="cell"><div class="g"></div><div class="nm">oct-cpu</div><div class="cp">U+F4BC</div></div>
+  <div class="cell pick"><div class="g"></div><div class="nm">fa-microchip</div><div class="cp">U+F2DB  catppuccin default</div></div>
+  <div class="cell"><div class="g">󰻠</div><div class="nm">cpu-64-bit</div><div class="cp">U+F0EE0</div></div>
+  <div class="cell"><div class="g">󰻟</div><div class="nm">cpu-32-bit</div><div class="cp">U+F0EDF</div></div>
+  <div class="cell"><div class="g">󰘚</div><div class="nm">md-chip</div><div class="cp">U+F061A</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">cod-chip</div><div class="cp">U+EC19</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fae-chip</div><div class="cp">U+E266</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">circuit-board</div><div class="cp">U+EABE</div></div>
+</div>
+
+<h2>mem / ram</h2>
+<div class="grid">
+  <div class="cell"><div class="g">󰍛</div><div class="nm">md-memory</div><div class="cp">U+F035B</div></div>
+  <div class="cell pick"><div class="g"></div><div class="nm">fa-memory</div><div class="cp">U+EFC5  catppuccin default</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fa-database</div><div class="cp">U+F1C0</div></div>
+  <div class="cell"><div class="g">󰆼</div><div class="nm">md-database</div><div class="cp">U+F01BC</div></div>
+  <div class="cell"><div class="g">󰋊</div><div class="nm">md-harddisk</div><div class="cp">U+F02CA</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">cod-database</div><div class="cp">U+EACE</div></div>
+</div>
+
+<h2>load / activity</h2>
+<div class="grid">
+  <div class="cell"><div class="g">󰊚</div><div class="nm">md-gauge</div><div class="cp">U+F029A  catppuccin default</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fa-tachometer</div><div class="cp">U+F0E4</div></div>
+  <div class="cell pick"><div class="g">󰓅</div><div class="nm">md-speedometer</div><div class="cp">U+F04C5</div></div>
+  <div class="cell"><div class="g">󰡴</div><div class="nm">gauge-full</div><div class="cp">U+F0874</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fa-bolt</div><div class="cp">U+F0E7</div></div>
+  <div class="cell"><div class="g">󰐰</div><div class="nm">md-pulse</div><div class="cp">U+F0430</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">cod-pulse</div><div class="cp">U+EB31</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fa-bar-chart</div><div class="cp">U+F080</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">cod-graph</div><div class="cp">U+EB03</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fae-pulse</div><div class="cp">U+E234</div></div>
+</div>
+
+<h2>time</h2>
+<div class="grid">
+  <div class="cell pick"><div class="g"></div><div class="nm">fa-clock</div><div class="cp">U+F017</div></div>
+  <div class="cell"><div class="g">󰥔</div><div class="nm">md-clock</div><div class="cp">U+F0954</div></div>
+  <div class="cell"><div class="g">󰅐</div><div class="nm">clock-outline</div><div class="cp">U+F0150</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">oct-clock</div><div class="cp">U+F43A</div></div>
+  <div class="cell"><div class="g">󰃰</div><div class="nm">calendar-clock</div><div class="cp">U+F00F0  catppuccin default</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fa-calendar</div><div class="cp">U+F073</div></div>
+  <div class="cell"><div class="g">󰃭</div><div class="nm">md-calendar</div><div class="cp">U+F00ED</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fa-stopwatch</div><div class="cp">U+F2F2</div></div>
+</div>
+
+<h2>session / tmux / shell</h2>
+<div class="grid">
+  <div class="cell pick"><div class="g"></div><div class="nm">cod-terminal-tmux</div><div class="cp">U+EBC8</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">dev-terminal</div><div class="cp">U+E795  catppuccin session</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">fa-terminal</div><div class="cp">U+F120</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">cod-terminal</div><div class="cp">U+EA85</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">oct-terminal</div><div class="cp">U+F489</div></div>
+  <div class="cell"><div class="g">󰆍</div><div class="nm">md-console</div><div class="cp">U+F018D</div></div>
+  <div class="cell"><div class="g">󱆃</div><div class="nm">md-bash</div><div class="cp">U+F1183</div></div>
+  <div class="cell"><div class="g"></div><div class="nm">cod-window</div><div class="cp">U+EB7F</div></div>
+</div>
+</body>
+</html>

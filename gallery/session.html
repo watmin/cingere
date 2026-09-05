@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>session icons</title>
+<style>
+@font-face { font-family: Hack; src: local("Hack"), url("Hack-Regular.ttf"); }
+@font-face { font-family: "Symbols Nerd Font Mono"; src: local("Symbols Nerd Font Mono"), url("SymbolsNerdFontMono-Regular.ttf"); }
+:root { --crust:#11111b; --mantle:#181825; --text:#cdd6f4; --sub:#a6adc8; --over:#6c7086; --green:#a6e3a1; --mauve:#cba6f7; }
+* { box-sizing:border-box; }
+body { margin:0; padding:24px 32px 40px; background:#0b0b12; color:var(--text); font:13px/1.3 Hack,"Symbols Nerd Font Mono",monospace; }
+h1 { font-size:15px; margin:0 0 4px; }
+.lead { color:var(--sub); margin:0 0 16px; max-width:1100px; }
+h2 { color:var(--mauve); font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin:20px 0 8px; }
+.row { display:flex; align-items:center; gap:16px; margin:0 0 5px; }
+.tag { width:260px; color:var(--over); font-size:11px; flex:none; }
+.bar { flex:1; display:flex; align-items:center; height:26px; background:var(--mantle); border-radius:5px; padding:0 10px; }
+.ico { color:var(--green); margin-right:6px; font-size:15px; font-family:"Symbols Nerd Font Mono",Hack,monospace; }
+.pick .tag { color:var(--mauve); }
+.pick .bar { outline:1px solid var(--mauve); }
+</style>
+</head>
+<body>
+<h1>session icons — sitting in front of “harness”</h1>
+<p class="lead">Current pick is mauve. The tmux-specific one is the tiled glyph. The split/grid ones are the multiplexer metaphor. Terminals are “a shell,” not “a session.”</p>
+
+<h2>tmux itself</h2>
+<div class="row pick"><div class="tag">  terminal-tmux  NOW</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">  terminal-bash</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">  terminal-linux</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">  terminal-ubuntu</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">󱆃  md-bash</div><div class="bar"><span class="ico">󱆃</span>harness</div></div>
+<div class="row"><div class="tag">  dev-bash</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">  seti-shell</div><div class="bar"><span class="ico"></span>harness</div></div>
+
+<h2>a shell — generic terminal</h2>
+<div class="row"><div class="tag">  dev-terminal  catppuccin default</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">  fa-terminal</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">  cod-terminal</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">  oct-terminal</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">󰆍  md-console</div><div class="bar"><span class="ico">󰆍</span>harness</div></div>
+<div class="row"><div class="tag">󰞷  console-line</div><div class="bar"><span class="ico">󰞷</span>harness</div></div>
+
+<h2>multiplexer — panes / splits / grid</h2>
+<div class="row"><div class="tag">  layout</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">  multiple-windows</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">  split-vertical</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">  split-horizontal</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">󰯌  view-split-vertical</div><div class="bar"><span class="ico">󰯌</span>harness</div></div>
+<div class="row"><div class="tag">󰯋  view-split-horizontal</div><div class="bar"><span class="ico">󰯋</span>harness</div></div>
+<div class="row"><div class="tag">󰕰  view-grid</div><div class="bar"><span class="ico">󰕰</span>harness</div></div>
+<div class="row"><div class="tag">󰕭  view-column</div><div class="bar"><span class="ico">󰕭</span>harness</div></div>
+<div class="row"><div class="tag">󰕮  dashboard</div><div class="bar"><span class="ico">󰕮</span>harness</div></div>
+<div class="row"><div class="tag">  fa-columns</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">  cells-large</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">  oct-columns</div><div class="bar"><span class="ico"></span>harness</div></div>
+
+<h2>window / tab</h2>
+<div class="row"><div class="tag">  window</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">  empty-window</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">󰓩  tab</div><div class="bar"><span class="ico">󰓩</span>harness</div></div>
+<div class="row"><div class="tag">  oct-tab</div><div class="bar"><span class="ico"></span>harness</div></div>
+<div class="row"><div class="tag">󰖱  window-open</div><div class="bar"><span class="ico">󰖱</span>harness</div></div>
+</body>
+</html>
