@@ -39,7 +39,8 @@ SEP_CH = "┃"
 BOLD = "\033[1m"
 RESET = "\033[0m"
 ANSI = re.compile(r"\x1b\[[0-9;:]*[A-Za-z]|\x1b\]8;;[^\x07\x1b]*(?:\x07|\x1b\\)")
-FAT = ("⣀", "⣤", "⣶", "⣿")
+# Hairline braille, right column, 8 heights. Floor ⢀ so empty isn't blank.
+HAIR = ("⢀", "⢠", "⢰", "⢸", "⣸", "⣼", "⣾", "⣿")
 
 # Claude paints the row inside the terminal. Stay out of the last N columns
 # so the TUI's own ellipsis never eats `high` / `5h 23%`.
@@ -165,13 +166,14 @@ def rate_pct(limits: object, key: str) -> int | None:
 
 
 def ctx_bar(pct: int, width: int = 8) -> str:
-    units = max(0, min(width * 4, int(pct * width * 4 / 100)))
+    n = len(HAIR)
+    units = max(0, min(width * n, int(pct * width * n / 100)))
     if pct > 0 and units == 0:
         units = 1
     out = []
     for i in range(width):
-        h = max(0, min(3, units - i * 4))
-        out.append(FAT[h])
+        h = max(0, min(n - 1, units - i * n))
+        out.append(HAIR[h])
     return "".join(out)
 
 
