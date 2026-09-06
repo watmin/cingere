@@ -39,9 +39,10 @@ SEP_CH = "┃"
 BOLD = "\033[1m"
 RESET = "\033[0m"
 ANSI = re.compile(r"\x1b\[[0-9;:]*[A-Za-z]|\x1b\]8;;[^\x07\x1b]*(?:\x07|\x1b\\)")
-# 2x4 braille tank: both bottom dots always on (⣀) so the track has no
-# gaps. Each cell climbs the left column, then the right, then we move
-# to the next cell. 7 states, 6 steps of fill above the floor.
+# 2x4 braille tank. Used cells are ⣿ in the meter color. Empty cells are
+# also ⣿, dim — ANSI can't recolor individual dots, so the whole cell
+# is the pixel. The leading cell still climbs ⣀→⣿ (left column, then
+# right) so 47% doesn't snap to 3/8 or 4/8.
 FILL = ("⣀", "⣄", "⣆", "⣇", "⣧", "⣷", "⣿")
 
 # Claude paints the row inside the terminal. Stay out of the last N columns
@@ -167,20 +168,22 @@ def rate_pct(limits: object, key: str) -> int | None:
         return None
 
 
-def ctx_bar(pct: int, width: int = 8) -> str:
+def ctx_bar(pct: int, width: int = 8, used: str = GREEN, empty: str = OVERLAY0) -> str:
     steps = len(FILL) - 1
     units = max(0, min(width * steps, int(pct * width * steps / 100)))
     if pct > 0 and units == 0:
         units = 1
+    on = rgb(used)
+    off = rgb(empty)
     out = []
     for i in range(width):
         u = units - i * steps
         if u <= 0:
-            out.append(FILL[0])
+            out.append(f"{off}⣿{RESET}")
         elif u >= steps:
-            out.append(FILL[-1])
+            out.append(f"{on}⣿{RESET}")
         else:
-            out.append(FILL[u])
+            out.append(f"{on}{FILL[u]}{RESET}")
     return "".join(out)
 
 
@@ -350,11 +353,10 @@ def main() -> None:
         )
 
     if size:
-        meter_full = f"{ctx_bar(pct_i, 8)} {fmt_tokens(used)}/{fmt_tokens(size)} {pct_i}%"
-        meter_compact = f"{ctx_bar(pct_i, 4)} {fmt_tokens(used)}/{fmt_tokens(size)} {pct_i}%"
-        cells.append(
-            Cell("meter", "right", 100, paint(meter_full, color), paint(meter_compact, color))
-        )
+        nums = paint(f"{fmt_tokens(used)}/{fmt_tokens(size)} {pct_i}%", color)
+        meter_full = f"{ctx_bar(pct_i, 8, used=color)} {nums}"
+        meter_compact = f"{ctx_bar(pct_i, 4, used=color)} {nums}"
+        cells.append(Cell("meter", "right", 100, meter_full, meter_compact))
     else:
         cells.append(Cell("meter", "right", 100, paint(f"{fmt_tokens(used)} in", OVERLAY0)))
     cache_label = None
