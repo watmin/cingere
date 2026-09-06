@@ -14,6 +14,7 @@ tmux/                  → ~/.config/tmux/
   spark.sh             fat braille cpu/mem (⣀ ⣤ ⣶ ⣿)
   procs.sh when.sh uptime.sh temp.sh marquee.sh
   holon                attach-or-create session `holon`
+                       (monitor=htop+watch, claude, grok)
 claude/statusline      → ~/.claude/statusline
 gallery/               icon menus (Ghostty + Hack + Symbols Nerd Font Mono)
 ```

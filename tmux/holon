@@ -1,12 +1,49 @@
 #!/bin/sh
-# Attach to the holon tmux session, or create it.
+# Attach to the holon tmux session, or create it:
+#   monitor  htop on top, watch ps | grep wat-rs below
+#   claude   claude --resume holon
+#   grok     grok --resume holon
 # If already inside tmux, switch instead of nesting.
+# HOLON_ATTACH=0 creates (if needed) and returns without attaching.
 set -e
 session=holon
+root="${HOLON_ROOT:-$HOME/work/holon}"
 
-if [ -n "$TMUX" ]; then
-  tmux has-session -t "$session" 2>/dev/null || tmux new-session -d -s "$session"
-  exec tmux switch-client -t "$session"
+if [ ! -d "$root" ]; then
+  echo "holon: cwd $root does not exist" >&2
+  exit 1
 fi
 
-exec tmux new-session -A -s "$session"
+create() {
+  tmux new-session -d -s "$session" -n monitor -c "$root"
+  tmux send-keys -t "$session:monitor" -l "htop"
+  tmux send-keys -t "$session:monitor" Enter
+  tmux split-window -v -t "$session:monitor" -c "$root"
+  tmux send-keys -t "$session:monitor" -l "watch 'ps faux | grep wat-rs'"
+  tmux send-keys -t "$session:monitor" Enter
+  tmux select-layout -t "$session:monitor" even-vertical
+  tmux select-pane -t "$session:monitor" -U
+
+  tmux new-window -t "$session" -n claude -c "$root"
+  tmux send-keys -t "$session:claude" -l "claude --resume holon"
+  tmux send-keys -t "$session:claude" Enter
+
+  tmux new-window -t "$session" -n grok -c "$root"
+  tmux send-keys -t "$session:grok" -l "grok --resume holon"
+  tmux send-keys -t "$session:grok" Enter
+
+  tmux select-window -t "$session:monitor"
+}
+
+if ! tmux has-session -t "$session" 2>/dev/null; then
+  create
+fi
+
+if [ "${HOLON_ATTACH:-1}" = 0 ]; then
+  exit 0
+fi
+
+if [ -n "$TMUX" ]; then
+  exec tmux switch-client -t "$session"
+fi
+exec tmux attach-session -t "$session"
