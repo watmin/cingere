@@ -54,8 +54,8 @@ h2 { color:var(--mauve); font-size:12px; letter-spacing:.08em; text-transform:up
 <div class="row"><div class="tag">▄▀█  half-blocks  3  too coarse</div><div class="bar"><span class="meter y">▄▄█▀█▄▄█</span></div></div>
 
 <h2>fill tank — how full right now (claude context)</h2>
-<p class="note">Live tank: both bottom dots always on (<b>⣀</b>) so the track never gaps. Each cell climbs the left column, then the right, then we step right. 47% is <b>⣿⣿⣿⣧⣀⣀⣀⣀</b>.</p>
-<div class="row now pick"><div class="tag">⣀⣄⣆⣇⣧⣷⣿  floor + left then right  LIVE</div><div class="bar"><span class="meter g">⣿⣀⣀⣀⣀⣀⣀⣀</span><span class="lbl">13%</span><span class="meter y" style="margin-left:18px">⣿⣿⣿⣧⣀⣀⣀⣀</span><span class="lbl">47%</span><span class="meter r" style="margin-left:18px">⣿⣿⣿⣿⣿⣿⣇⣀</span><span class="lbl">82%</span></div></div>
+<p class="note">Live tank: dim ⣿ track. Leading cell climbs left column first (<b>⡀⡄⡆⡇</b>, right dark), then right (<b>⣇⣧⣷⣿</b>). 17% is <b>⣿⡆</b> + dim track, not <b>⣆</b> (which lit the right floor too early).</p>
+<div class="row now pick"><div class="tag">⡀⡄⡆⡇⣇⣧⣷⣿  left full before right  LIVE</div><div class="bar"><span class="meter g">⣿⡆⣿⣿⣿⣿⣿⣿</span><span class="lbl">17%</span><span class="meter y" style="margin-left:18px">⣿⣿⣿⡇⣿⣿⣿⣿</span><span class="lbl">47%</span><span class="meter r" style="margin-left:18px">⣿⣿⣿⣿⣿⣿⣷⣿</span><span class="lbl">82%</span></div></div>
 <div class="row"><div class="tag">right hair + floor ⢀  (the odd 47%)</div><div class="bar"><span class="meter y">⣿⣿⣿⣾⢀⢀⢀⢀</span><span class="lbl">47%</span></div></div>
 <div class="row"><div class="tag">left hair, blank empty</div><div class="bar"><span class="meter y">⣿⣿⣿⣧⠀⠀⠀⠀</span><span class="lbl">47%</span></div></div>
 <div class="row"><div class="tag">fat  ⣀⣤⣶⣿  both cols at once</div><div class="bar"><span class="meter y">⣿⣿⣿⣶⣀⣀⣀⣀</span><span class="lbl">47%</span></div></div>
@@ -72,8 +72,7 @@ h2 { color:var(--mauve); font-size:12px; letter-spacing:.08em; text-transform:up
 
 <h2>braille — 256 patterns, the useful meter cuts</h2>
 <p class="note">A braille cell is 2×4 dots. We were only using 4 of 256. These are the fills that actually read as a meter.</p>
-<div class="row now"><div class="tag">floor + L then R  7  LIVE</div><div class="bar"><span class="meter">⣀ ⣄ ⣆ ⣇ ⣧ ⣷ ⣿</span></div></div>
-<div class="row"><div class="tag">left col hair  8</div><div class="bar"><span class="meter">⡀ ⡄ ⡆ ⡇ ⣇ ⣧ ⣷ ⣿</span></div></div>
+<div class="row now"><div class="tag">left full before right  8  LIVE</div><div class="bar"><span class="meter">⡀ ⡄ ⡆ ⡇ ⣇ ⣧ ⣷ ⣿</span></div></div>
 <div class="row"><div class="tag">right col hair  8  (gap after ⣿)</div><div class="bar"><span class="meter">⢀ ⢠ ⢰ ⢸ ⣸ ⣼ ⣾ ⣿</span></div></div>
 <div class="row"><div class="tag">row-wise liquid  8  both cols</div><div class="bar"><span class="meter">⡀ ⣀ ⣄ ⣤ ⣦ ⣶ ⣷ ⣿</span></div></div>
 <div class="row"><div class="tag">fat  4  both cols together</div><div class="bar"><span class="meter">⣀ ⣤ ⣶ ⣿</span></div></div>

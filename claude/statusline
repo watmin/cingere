@@ -39,11 +39,10 @@ SEP_CH = "┃"
 BOLD = "\033[1m"
 RESET = "\033[0m"
 ANSI = re.compile(r"\x1b\[[0-9;:]*[A-Za-z]|\x1b\]8;;[^\x07\x1b]*(?:\x07|\x1b\\)")
-# 2x4 braille tank. Used cells are ⣿ in the meter color. Empty cells are
-# also ⣿, dim — ANSI can't recolor individual dots, so the whole cell
-# is the pixel. The leading cell still climbs ⣀→⣿ (left column, then
-# right) so 47% doesn't snap to 3/8 or 4/8.
-FILL = ("⣀", "⣄", "⣆", "⣇", "⣧", "⣷", "⣿")
+# 2x4 braille tank. Empty cells are dim ⣿. Used cells climb the left
+# column (⡀⡄⡆⡇) with the right column dark, then the right (⣇⣧⣷⣿).
+# Right's first dot does not land until left is full.
+FILL = ("⡀", "⡄", "⡆", "⡇", "⣇", "⣧", "⣷", "⣿")
 
 # Claude paints the row inside the terminal. Stay out of the last N columns
 # so the TUI's own ellipsis never eats `high` / `5h 23%`.
@@ -169,21 +168,21 @@ def rate_pct(limits: object, key: str) -> int | None:
 
 
 def ctx_bar(pct: int, width: int = 8, used: str = GREEN, empty: str = OVERLAY0) -> str:
-    steps = len(FILL) - 1
-    units = max(0, min(width * steps, int(pct * width * steps / 100)))
+    n = len(FILL)
+    units = max(0, min(width * n, int(pct * width * n / 100)))
     if pct > 0 and units == 0:
         units = 1
     on = rgb(used)
     off = rgb(empty)
     out = []
     for i in range(width):
-        u = units - i * steps
+        u = units - i * n
         if u <= 0:
             out.append(f"{off}⣿{RESET}")
-        elif u >= steps:
+        elif u >= n:
             out.append(f"{on}⣿{RESET}")
         else:
-            out.append(f"{on}{FILL[u]}{RESET}")
+            out.append(f"{on}{FILL[u - 1]}{RESET}")
     return "".join(out)
 
 
