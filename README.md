@@ -9,14 +9,12 @@ The Claude row is folder · model · git · context spark · cache · output · 
 ## Layout
 
 ```
+holon                  → ~/.local/bin/holon   (the command you type)
 tmux.conf              → ~/.tmux.conf
-tmux/                  → ~/.config/tmux/
-  spark.sh             fat braille cpu/mem (⣀ ⣤ ⣶ ⣿)
-  procs.sh when.sh uptime.sh temp.sh marquee.sh
-  holon                attach-or-create session `holon`
-                       (monitor=htop+watch, claude, grok)
+tmux/                  → ~/.config/tmux/      (bar helpers only)
+  spark.sh procs.sh when.sh uptime.sh temp.sh marquee.sh
 claude/statusline      → ~/.claude/statusline
-gallery/               icon menus (Ghostty + Hack + Symbols Nerd Font Mono)
+gallery/               icon menus
 ```
 
 `tmux.conf` still calls `$HOME/.config/tmux/…`. Install makes that the repo's `tmux/` directory.
