@@ -39,8 +39,11 @@ SEP_CH = "┃"
 BOLD = "\033[1m"
 RESET = "\033[0m"
 ANSI = re.compile(r"\x1b\[[0-9;:]*[A-Za-z]|\x1b\]8;;[^\x07\x1b]*(?:\x07|\x1b\\)")
-# Hairline braille, right column, 8 heights. Floor ⢀ so empty isn't blank.
-HAIR = ("⢀", "⢠", "⢰", "⢸", "⣸", "⣼", "⣾", "⣿")
+# Hairline braille, left column, 8 heights. Empty cells are blank so 47%
+# doesn't paint a floor-dot on the right. Left column keeps the leading
+# edge flush with the full cells (right-column hairline left a gap).
+HAIR = ("⡀", "⡄", "⡆", "⡇", "⣇", "⣧", "⣷", "⣿")
+EMPTY = "⠀"
 
 # Claude paints the row inside the terminal. Stay out of the last N columns
 # so the TUI's own ellipsis never eats `high` / `5h 23%`.
@@ -172,8 +175,13 @@ def ctx_bar(pct: int, width: int = 8) -> str:
         units = 1
     out = []
     for i in range(width):
-        h = max(0, min(n - 1, units - i * n))
-        out.append(HAIR[h])
+        u = units - i * n
+        if u <= 0:
+            out.append(EMPTY)
+        elif u >= n:
+            out.append(HAIR[-1])
+        else:
+            out.append(HAIR[u - 1])
     return "".join(out)
 
 
