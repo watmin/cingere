@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
-"""Fat braille sparkline: 8 cells, both columns same height so it reads at 10pt.
+"""Braille sparkline: 8 cells, two samples each (left = prior, right = now).
 
 Usage: spark.sh cpu | mem
 
-Floor is ⣀ (never blank). Levels: ⣀ ⣤ ⣶ ⣿
-
-tmux redraws this every status-interval (1s). Samples themselves land every
-INTERVAL seconds, so 8 cells ≈ 80s of history.
+Each column is 4 buckets: 0-24 25-49 50-74 75-100. Floor is the bottom
+dot, never blank. 16 samples in 8 glyphs; INTERVAL 10s → ~160s of history.
 """
 import os
 import sys
@@ -14,7 +12,7 @@ import time
 from pathlib import Path
 
 KIND = sys.argv[1] if len(sys.argv) > 1 else "cpu"
-SAMPLES = 8
+SAMPLES = 16
 INTERVAL = 10.0
 
 runtime = Path(os.environ.get("XDG_RUNTIME_DIR") or f"/tmp/tmux-{os.getuid()}")
@@ -24,9 +22,9 @@ except OSError:
     runtime = Path("/tmp")
 state = runtime / f"tmux-spark-{KIND}"
 
-# both columns filled — twice as wide as the old hairline graph
-# height 1..4 → ⣀ ⣤ ⣶ ⣿
-FAT = (0xC0, 0xE4, 0xF6, 0xFF)
+# left column dots 7,3,2,1 (bottom → top); right 8,6,5,4
+LEFT = (0x40, 0x44, 0x46, 0x47)
+RIGHT = (0x80, 0xA0, 0xB0, 0xB8)
 
 
 def cpu_pct(prev_t, prev_i, total, idle):
@@ -57,8 +55,14 @@ def read_mem():
 
 
 def height(pct: float) -> int:
-    # 0% → 0 (⣀), 100% → 3 (⣿)
-    return max(0, min(3, int((pct / 100.0) * 4)))
+    """1..4 for 0-24, 25-49, 50-74, 75-100."""
+    if pct >= 75:
+        return 4
+    if pct >= 50:
+        return 3
+    if pct >= 25:
+        return 2
+    return 1
 
 
 def pad(hist: list[float]) -> list[float]:
@@ -68,8 +72,14 @@ def pad(hist: list[float]) -> list[float]:
     return hist
 
 
+def cell(prior: float, now: float) -> str:
+    bits = LEFT[height(prior) - 1] | RIGHT[height(now) - 1]
+    return chr(0x2800 + bits)
+
+
 def render(hist: list[float]) -> None:
-    print("".join(chr(0x2800 + FAT[height(v)]) for v in pad(hist)), end="")
+    hist = pad(hist)
+    print("".join(cell(hist[i], hist[i + 1]) for i in range(0, SAMPLES, 2)), end="")
 
 
 def load():
