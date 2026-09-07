@@ -5,6 +5,10 @@
 #   grok     grok --resume holon
 # If already inside tmux, switch instead of nesting.
 # HOLON_ATTACH=0 creates (if needed) and returns without attaching.
+#
+# Agent sandboxes export NO_COLOR=1 and TERM=dumb. tmux copies this
+# process into the server on first start, so strip before any tmux
+# command. Existing panes keep their env until those processes restart.
 set -e
 session=holon
 root="${HOLON_ROOT:-$HOME/work/holon}"
@@ -12,6 +16,29 @@ root="${HOLON_ROOT:-$HOME/work/holon}"
 if [ ! -d "$root" ]; then
   echo "holon: cwd $root does not exist" >&2
   exit 1
+fi
+
+unset NO_COLOR GROK_AGENT GROK_SESSION_ID FORCE_COLOR \
+      CLICOLOR CLICOLOR_FORCE CARGO_TERM_COLOR PIP_NO_COLOR \
+      NPM_CONFIG_COLOR
+case "${TERM:-}" in
+  dumb|"") TERM=tmux-256color; export TERM ;;
+esac
+COLORTERM="${COLORTERM:-truecolor}"
+export COLORTERM
+
+# has-session starts the server if none exists, so scrub first.
+for var in NO_COLOR GROK_AGENT GROK_SESSION_ID FORCE_COLOR \
+           CLICOLOR CLICOLOR_FORCE CARGO_TERM_COLOR PIP_NO_COLOR \
+           NPM_CONFIG_COLOR; do
+  tmux set-environment -gu "$var" || true
+done
+gterm=$(tmux show-environment -g TERM 2>/dev/null || true)
+case "$gterm" in
+  TERM=dumb|"") tmux set-environment -g TERM "$TERM" || true ;;
+esac
+if ! tmux show-environment -g COLORTERM >/dev/null 2>&1; then
+  tmux set-environment -g COLORTERM "$COLORTERM" || true
 fi
 
 create() {
