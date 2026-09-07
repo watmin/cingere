@@ -4,6 +4,7 @@
 Same chrome as Claude. Grok already deducts padding from COLUMNS, so no
 gutter. Live window is context_tokens; billed session is session_*.
 Tank goes amber at auto_compact_threshold_percent (80 if omitted).
+Cache is session hit% (cache_read / session_input), same idea as Claude.
 """
 from __future__ import annotations
 
@@ -330,7 +331,6 @@ def main() -> None:
     su = cw.get("session_usage") or {}
     sess_in = as_int(cw.get("session_input_tokens")) or 0
     cache_read = as_int(su.get("cache_read_input_tokens"))
-    cache_write = as_int(su.get("cache_creation_input_tokens"))
     effort = ((data.get("effort") or {}).get("level") or "").strip()
     limits = data.get("rate_limits") or {}
     five = rate_pct(limits, "five_hour")
@@ -360,21 +360,19 @@ def main() -> None:
         cells.append(Cell("meter", "right", 100, meter_full, meter_compact))
     else:
         cells.append(Cell("meter", "right", 100, paint(f"{fmt_tokens(used)} in", OVERLAY0)))
-    read_n = cache_read or 0
-    write_n = cache_write or 0
-    if read_n or write_n:
-        hit = int(round(100.0 * read_n / sess_in)) if sess_in else None
-        cache_color = GREEN if (hit is None or hit >= 70) else YELLOW
-        cache_full = (
-            f"{paint(ICO_CACHE, cache_color)} "
-            f"{paint(f'{fmt_tokens(read_n)} r', GREEN)} "
-            f"{paint(f'{fmt_tokens(write_n)} w', PEACH)}"
+    if sess_in and cache_read is not None:
+        hit = int(round(100.0 * cache_read / sess_in))
+        cache_color = GREEN if hit >= 70 else YELLOW
+        label = f"{hit}%"
+        cells.append(
+            Cell(
+                "cache",
+                "right",
+                76,
+                f"{paint(ICO_CACHE, cache_color)} {paint(label, cache_color)}",
+                paint(label, cache_color),
+            )
         )
-        if hit is not None:
-            cache_compact = f"{paint(ICO_CACHE, cache_color)} {paint(f'{hit}%', cache_color)}"
-        else:
-            cache_compact = f"{paint(fmt_tokens(read_n), GREEN)}/{paint(fmt_tokens(write_n), PEACH)}"
-        cells.append(Cell("cache", "right", 76, cache_full, cache_compact))
     if out_tok:
         cells.append(
             Cell("out", "right", 70, f"{paint(ICO_OUT, BLUE)} {paint(fmt_tokens(out_tok), BLUE)}")
