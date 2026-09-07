@@ -54,10 +54,27 @@ ICO_RATE = "󰓅"
 ICO_WEEK = "󰃭"
 
 
+# Grok's status-line sanitizer keeps 16-color SGR (the docs example is
+# \033[32m) and drops 24-bit 38;2, so truecolor came out as default fg.
+ANSI16 = {
+    MAUVE: "35",
+    LAVENDER: "95",
+    TEXT: "37",
+    OVERLAY0: "90",
+    SURFACE1: "90",
+    GREEN: "32",
+    YELLOW: "33",
+    RED: "31",
+    BLUE: "34",
+    FLAMINGO: "95",
+    PEACH: "93",
+    TEAL: "36",
+    SKY: "96",
+}
+
+
 def rgb(hex_color: str) -> str:
-    h = hex_color.lstrip("#")
-    r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
-    return f"\033[38;2;{r};{g};{b}m"
+    return f"\033[{ANSI16.get(hex_color, '37')}m"
 
 
 SEP = f"{rgb(SURFACE1)}{SEP_CH}{RESET}"
