@@ -4,8 +4,8 @@
 Usage: spark.sh cpu|mem [cells]
 
 Each column is 4 buckets: 0-24 25-49 50-74 75-100. Floor is the bottom
-dot, never blank. Default 10 cells = 20 samples. tmux status-interval
-is 1s and every redraw is a sample, so 10 cells ≈ 20s of history.
+dot, never blank. Default 10 cells = 20 samples. A sample lands every
+INTERVAL seconds, so 10 cells ≈ 60s of lookback.
 """
 import os
 import sys
@@ -17,7 +17,8 @@ CELLS = int(sys.argv[2]) if len(sys.argv) > 2 else 10
 if CELLS < 1:
     CELLS = 10
 SAMPLES = CELLS * 2
-TAG = "1s"
+INTERVAL = 3.0
+TAG = "3s"
 
 runtime = Path(os.environ.get("XDG_RUNTIME_DIR") or f"/tmp/tmux-{os.getuid()}")
 try:
@@ -91,7 +92,7 @@ def load():
     if not state.exists():
         return None
     parts = state.read_text().split()
-    # v3: "1s" <epoch> [<total> <idle>] <hist...>
+    # v4: "3s" <epoch> [<total> <idle>] <hist...>
     if len(parts) < 2 or parts[0] != TAG:
         return None
     try:
@@ -124,9 +125,10 @@ if KIND == "cpu":
         save(now, total, idle, [])
         render([])
         raise SystemExit(0)
-    _, prev_t, prev_i, hist = loaded
-    hist.append(cpu_pct(prev_t, prev_i, total, idle))
-    save(now, total, idle, hist)
+    ts, prev_t, prev_i, hist = loaded
+    if now - ts >= INTERVAL:
+        hist.append(cpu_pct(prev_t, prev_i, total, idle))
+        save(now, total, idle, hist)
     render(hist)
 else:
     pct = read_mem()
@@ -134,7 +136,8 @@ else:
         save(now, 0.0, 0.0, [pct])
         render([pct])
         raise SystemExit(0)
-    _, _, _, hist = loaded
-    hist.append(pct)
-    save(now, 0.0, 0.0, hist)
+    ts, _, _, hist = loaded
+    if now - ts >= INTERVAL:
+        hist.append(pct)
+        save(now, 0.0, 0.0, hist)
     render(hist)
