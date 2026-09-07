@@ -14,6 +14,7 @@ tmux.conf              → ~/.tmux.conf
 tmux/                  → ~/.config/tmux/      (bar helpers only)
   spark.sh procs.sh when.sh uptime.sh temp.sh marquee.sh
 claude/statusline      → ~/.claude/statusline
+grok/statusline        → ~/.grok/statusline
 gallery/               icon menus
 ```
 

@@ -25,8 +25,9 @@ link() {
 link "$root/tmux.conf" "$HOME/.tmux.conf"
 link "$root/tmux" "$HOME/.config/tmux"
 link "$root/claude/statusline" "$HOME/.claude/statusline"
+link "$root/grok/statusline" "$HOME/.grok/statusline"
 link "$root/holon" "$HOME/.local/bin/holon"
-chmod +x "$root/holon" "$root/claude/statusline" "$root/tmux/"*
+chmod +x "$root/holon" "$root/claude/statusline" "$root/grok/statusline" "$root/tmux/"*
 
 python3 - "$root" <<'PY'
 import json, sys
@@ -50,6 +51,7 @@ PY
 echo "cingere: $HOME/.tmux.conf -> $root/tmux.conf"
 echo "cingere: $HOME/.config/tmux -> $root/tmux"
 echo "cingere: $HOME/.claude/statusline -> $root/claude/statusline"
+echo "cingere: $HOME/.grok/statusline -> $root/grok/statusline"
 echo "cingere: $HOME/.local/bin/holon -> $root/holon"
 echo "reload tmux: tmux source-file ~/.tmux.conf"
 echo "claude statusline reloads on the next refresh"
