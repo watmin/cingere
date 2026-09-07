@@ -2,7 +2,8 @@
 """Grok status line in the tmux pipes register.
 
 Same chrome as Claude. Grok already deducts padding from COLUMNS, so no
-gutter. JSON uses context_tokens / session_* instead of Claude's total_*.
+gutter. Live window is context_tokens; billed session is session_*.
+Tank goes amber at auto_compact_threshold_percent (80 if omitted).
 """
 from __future__ import annotations
 
@@ -134,10 +135,20 @@ def fmt_duration(ms: object, compact: bool = False) -> str | None:
     return f"{hours}h{mins:02d}m"
 
 
-def ctx_color(pct: int) -> str:
+def as_int(n: object) -> int | None:
+    if n is None:
+        return None
+    try:
+        return int(float(n))
+    except (TypeError, ValueError):
+        return None
+
+
+def ctx_color(pct: int, compact_at: int | None = None) -> str:
     if pct >= 90:
         return RED
-    if pct >= 80:
+    warn = 80 if compact_at is None else compact_at
+    if pct >= warn:
         return YELLOW
     return GREEN
 
@@ -303,30 +314,23 @@ def main() -> None:
     cwd = (data.get("workspace") or {}).get("current_dir") or data.get("cwd") or ""
     folder = cwd.rstrip("/").rsplit("/", 1)[-1] if cwd else ""
     cw = data.get("context_window") or {}
-    used = cw.get("context_tokens") or cw.get("total_input_tokens") or 0
-    out_tok = cw.get("session_output_tokens") or cw.get("total_output_tokens") or 0
-    size = cw.get("context_window_size") or 0
+    used = as_int(cw.get("context_tokens") or cw.get("total_input_tokens")) or 0
+    out_tok = as_int(cw.get("session_output_tokens") or cw.get("total_output_tokens")) or 0
+    size = as_int(cw.get("context_window_size")) or 0
     pct = cw.get("used_percentage")
     if pct is None and size:
         pct = 100.0 * float(used) / float(size)
-    try:
-        pct_i = int(float(pct or 0))
-    except (TypeError, ValueError):
-        pct_i = 0
-    color = ctx_color(pct_i)
+    pct_i = as_int(pct) or 0
+    compact_at = as_int(cw.get("auto_compact_threshold_percent"))
+    color = ctx_color(pct_i, compact_at)
     cost = data.get("cost") or {}
     usd = cost.get("total_cost_usd")
     dur_ms = cost.get("total_duration_ms")
     added, removed = 0, 0
     su = cw.get("session_usage") or {}
-    sess_in = cw.get("session_input_tokens") or 0
-    cache_read = su.get("cache_read_input_tokens")
-    pc = {}
-    if sess_in and cache_read is not None:
-        try:
-            pc = {"warm": True, "hit_ratio": float(cache_read) / float(sess_in)}
-        except (TypeError, ValueError, ZeroDivisionError):
-            pc = {}
+    sess_in = as_int(cw.get("session_input_tokens")) or 0
+    cache_read = as_int(su.get("cache_read_input_tokens"))
+    cache_write = as_int(su.get("cache_creation_input_tokens"))
     effort = ((data.get("effort") or {}).get("level") or "").strip()
     limits = data.get("rate_limits") or {}
     five = rate_pct(limits, "five_hour")
@@ -348,41 +352,29 @@ def main() -> None:
 
     if size:
         nums = paint(f"{fmt_tokens(used)}/{fmt_tokens(size)} {pct_i}%", color)
+        billed = paint(f"· {fmt_tokens(sess_in)}", OVERLAY0) if sess_in else ""
         meter_full = f"{ctx_bar(pct_i, 8, used=color)} {nums}"
+        if billed:
+            meter_full = f"{meter_full} {billed}"
         meter_compact = f"{ctx_bar(pct_i, 4, used=color)} {nums}"
         cells.append(Cell("meter", "right", 100, meter_full, meter_compact))
     else:
         cells.append(Cell("meter", "right", 100, paint(f"{fmt_tokens(used)} in", OVERLAY0)))
-    cache_label = None
-    cache_compact = None
-    cache_color = OVERLAY0
-    if pc:
-        warm = pc.get("warm")
-        ratio = pc.get("hit_ratio")
-        hit = None
-        if ratio is not None:
-            try:
-                hit = int(round(float(ratio) * 100))
-            except (TypeError, ValueError):
-                hit = None
-        if warm is False:
-            cache_color = RED
-            cache_label = "cold"
-            cache_compact = "cold"
-        elif hit is not None or warm:
-            cache_color = GREEN if (hit is None or hit >= 70) else YELLOW
-            cache_label = f"{hit}%" if hit is not None else "warm"
-            cache_compact = cache_label
-    if cache_label:
-        cells.append(
-            Cell(
-                "cache",
-                "right",
-                76,
-                f"{paint(ICO_CACHE, cache_color)} {paint(cache_label, cache_color)}",
-                paint(cache_compact, cache_color),
-            )
+    read_n = cache_read or 0
+    write_n = cache_write or 0
+    if read_n or write_n:
+        hit = int(round(100.0 * read_n / sess_in)) if sess_in else None
+        cache_color = GREEN if (hit is None or hit >= 70) else YELLOW
+        cache_full = (
+            f"{paint(ICO_CACHE, cache_color)} "
+            f"{paint(f'{fmt_tokens(read_n)} r', GREEN)} "
+            f"{paint(f'{fmt_tokens(write_n)} w', PEACH)}"
         )
+        if hit is not None:
+            cache_compact = f"{paint(ICO_CACHE, cache_color)} {paint(f'{hit}%', cache_color)}"
+        else:
+            cache_compact = f"{paint(fmt_tokens(read_n), GREEN)}/{paint(fmt_tokens(write_n), PEACH)}"
+        cells.append(Cell("cache", "right", 76, cache_full, cache_compact))
     if out_tok:
         cells.append(
             Cell("out", "right", 70, f"{paint(ICO_OUT, BLUE)} {paint(fmt_tokens(out_tok), BLUE)}")
