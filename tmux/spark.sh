@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Braille sparkline: 8 cells, two samples each (left = prior, right = now).
+"""Braille sparkline: two samples per cell (left = prior, right = now).
 
-Usage: spark.sh cpu | mem
+Usage: spark.sh cpu|mem [cells]
 
 Each column is 4 buckets: 0-24 25-49 50-74 75-100. Floor is the bottom
-dot, never blank. 16 samples in 8 glyphs; INTERVAL 10s → ~160s of history.
+dot, never blank. Default 10 cells = 20 samples. tmux status-interval
+is 1s and every redraw is a sample, so 10 cells ≈ 20s of history.
 """
 import os
 import sys
@@ -12,8 +13,11 @@ import time
 from pathlib import Path
 
 KIND = sys.argv[1] if len(sys.argv) > 1 else "cpu"
-SAMPLES = 16
-INTERVAL = 10.0
+CELLS = int(sys.argv[2]) if len(sys.argv) > 2 else 10
+if CELLS < 1:
+    CELLS = 10
+SAMPLES = CELLS * 2
+TAG = "1s"
 
 runtime = Path(os.environ.get("XDG_RUNTIME_DIR") or f"/tmp/tmux-{os.getuid()}")
 try:
@@ -87,8 +91,8 @@ def load():
     if not state.exists():
         return None
     parts = state.read_text().split()
-    # v2: "10s" <epoch> [<total> <idle>] <hist...>
-    if len(parts) < 2 or parts[0] != "10s":
+    # v3: "1s" <epoch> [<total> <idle>] <hist...>
+    if len(parts) < 2 or parts[0] != TAG:
         return None
     try:
         ts = float(parts[1])
@@ -105,9 +109,9 @@ def load():
 def save(ts: float, total: float, idle: float, hist: list[float]) -> None:
     hist = pad(hist)
     if KIND == "cpu":
-        payload = ["10s", f"{ts:.0f}", f"{total:.0f}", f"{idle:.0f}", *(f"{x:.1f}" for x in hist)]
+        payload = [TAG, f"{ts:.0f}", f"{total:.0f}", f"{idle:.0f}", *(f"{x:.1f}" for x in hist)]
     else:
-        payload = ["10s", f"{ts:.0f}", *(f"{x:.1f}" for x in hist)]
+        payload = [TAG, f"{ts:.0f}", *(f"{x:.1f}" for x in hist)]
     state.write_text(" ".join(payload))
 
 
@@ -120,12 +124,9 @@ if KIND == "cpu":
         save(now, total, idle, [])
         render([])
         raise SystemExit(0)
-    ts, prev_t, prev_i, hist = loaded
-    if now - ts >= INTERVAL:
-        hist.append(cpu_pct(prev_t, prev_i, total, idle))
-        save(now, total, idle, hist)
-    else:
-        total, idle, hist = prev_t, prev_i, hist
+    _, prev_t, prev_i, hist = loaded
+    hist.append(cpu_pct(prev_t, prev_i, total, idle))
+    save(now, total, idle, hist)
     render(hist)
 else:
     pct = read_mem()
@@ -133,8 +134,7 @@ else:
         save(now, 0.0, 0.0, [pct])
         render([pct])
         raise SystemExit(0)
-    ts, _, _, hist = loaded
-    if now - ts >= INTERVAL:
-        hist.append(pct)
-        save(now, 0.0, 0.0, hist)
+    _, _, _, hist = loaded
+    hist.append(pct)
+    save(now, 0.0, 0.0, hist)
     render(hist)
