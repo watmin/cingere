@@ -23,8 +23,8 @@ gallery/               icon menus
 ## Install
 
 ```bash
-git clone https://github.com/watmin/cingere.git ~/work/cingere
-~/work/cingere/install
+git clone https://github.com/watmin/cingere.git ~/work/holon/cingere
+~/work/holon/cingere/install
 tmux source-file ~/.tmux.conf
 ```
 
